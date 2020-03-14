@@ -29,7 +29,7 @@
                 <div class="col-sm-12">
                     <div class="product-slider">
 
-                        <img src="{!! $product->img !!}" alt="" class="img-responsive m-b-25" style="height: 600px;width: 100%;">
+                        <img src="{!! $product->img !!}" alt="" class="img-responsive m-b-25" >
 
 
                     </div>

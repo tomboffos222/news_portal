@@ -1,0 +1,9 @@
+@media (max-width: 786px){
+    .header .logo {
+        float: none !important;
+    }
+    .container-fluid{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}

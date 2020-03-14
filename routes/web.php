@@ -17,6 +17,9 @@ Route::get('popular','UserController@Popular')->name('Popular');
 Route::get('fresh','UserController@FreshArticles')->name('FreshArticles');
 Route::get('search','UserController@Search')->name('Search');
 Route::get('search/product','UserController@SearchProduct')->name('SearchProduct');
+Route::get('fail/payment','UserController@PaymentFail')->name('PaymentFail');
+Route::get('success/payment','UserController@PaymentGood')->name('PaymentGood');
+
 //Admin
 Route::get('admin','AdminController@LoginPage')->name('admin.LoginPage');
 Route::post('admin/login','AdminController@Login')->name('admin.Login');

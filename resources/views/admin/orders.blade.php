@@ -9,7 +9,8 @@
                 <th>Номер заказа</th>
                 <th>Количество</th>
                 <th>Сумма</th>
-                <th>Логин пользователя</th>
+                <th>Статус</th>
+
                 <th>Вид доставки</th>
                 <th>Адрес</th>
                 <th>Город</th>
@@ -24,7 +25,14 @@
                 <td><a href="{{route('admin.OrdersView',$order->id)}}">{{$order->id}}</a></td>
                 <td>{{$order->quantity}}</td>
                 <td>{{$order->total}}</td>
-                <td>{{$order->user_id}}</td>
+                <td>
+                    @if($order->status == 'ok')
+                        Оплачено
+                        @else
+                        Не оплачено
+                        @endif
+                </td>
+
                 <td>
                     @if($order->type_of_order == 'pick_up')
                         Самовывоз

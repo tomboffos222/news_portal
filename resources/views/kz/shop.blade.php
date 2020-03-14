@@ -42,7 +42,7 @@
                                 </a></li><li class="active">HOMMES STORE</li></ul>
                     </div>
                     @foreach($products as $product)
-                    <div class="col-md-4 col-xs-12 col-sm-6 product">
+                    <div class="col-md-4 col-xs-6 col-sm-6 product">
                         <a href="{{Route('kz.Product',$product->id)}}" title="{{$product->description}}">
                             <img class="img-responsive" alt="" style="height: 200px;width: 100%;" src="{!! $product->img !!}">
                         </a>
@@ -120,6 +120,11 @@
 	}
     .product img{
         height: 300px !important;
+    }
+    @media (max-width: 728px){
+        .product img{
+            height: 150px !important;
+        }
     }
 	.book{
 		padding:0px !important;

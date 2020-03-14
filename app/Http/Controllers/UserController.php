@@ -17,6 +17,7 @@ use App\Categories;
 
 use App\Withdrawal;
 use App\Message;
+use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Types\This;
 
 class UserController extends Controller
@@ -264,7 +265,7 @@ class UserController extends Controller
                 $order['region'] = $request['region'];
                 $order['city'] = $request['city'];
                 $order['type_of_order'] = $request['type_of_order'];
-
+                $order['status'] = 'wait';
                 $order->save();
 
 
@@ -277,10 +278,103 @@ class UserController extends Controller
                     $orderProducts['quantity'] = $product[1];
                     $orderProducts->save();
                 }
-                return redirect()->route('shop')->with('message', 'Ваш заказ оформлен');
+            $data['MERCHANT_ID'] = 17277;
+            $data['PAYMENT_AMOUNT'] = $order['total'];
+            $data['PAYMENT_ORDER_ID'] = $order->id;
+            $data['PAYMENT_INFO'] = 'Оплата за покупку в магазине KHAN-TIME'.$order->id;
+            $data['PAYMENT_RETURN_URL'] = route('PaymentGood');
+            $data['PAYMENT_RETURN_FAIL_URL'] = route('PaymentFail');
+            $data['PAYMENT_CALLBACK_URL'] = route('PaymentResult');
+            ksort($data);
+            $str = '';
+            foreach ($data as $d){
+                $str .= $d;
+            }
+            $secret_key = 'b4ce4e72-6443-11ea-98a5-448a5bd44871';
+            $signature = base64_encode(pack("H*", md5($str.$secret_key)));//
+            $data['PAYMENT_HASH'] =$signature;
+
+
+            $res = self::SendReq('https://spos.kz/merchant/api/create_invoice',$data);
+            if ($res->status == 0){
+
+
+                return redirect($res->data->url);
+            }else{
+                return redirect()->back();
+            }
+
+
+
+
+
+
 
         }
 
+
+
+
+
+    }
+    public function PaymentResult(Request $request){
+        Storage::put('pay.log',$request->all());
+
+        $order = Orders::find($request['PAYMENT_ORDER_ID']);
+        if ($request['PAYMENT_STATUS'] == 'paid'){
+            $order['status'] = 'ok';
+            $order->save();
+
+
+            return "RESULT=OK";
+        }else{
+            $order['status'] = 'fail';
+            $order->save();
+
+            return "RESULT=RETRY";
+        }
+
+    }
+    public function PaymentGood(){
+        return redirect()->route('Home')->with('message','Оплата прошла успешно');
+    }
+    public function PaymentFail(){
+        return redirect()->route('Home')->withErrors('Недостаточно средств или ошибка');
+
+    }
+    private static function SendReq($url,$params) {
+        // Set POST variables
+
+        $headers = array(
+
+            'Content-Type: application/json'
+        );
+        // Open connection
+        $ch = curl_init();
+
+        // Set the url, number of POST vars, POST data
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Disabling SSL Certificate support temporarly
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+
+        // Execute post
+        $result = curl_exec($ch);
+        // echo "Result".$result;
+        if ($result === FALSE) {
+            die('Curl failed: ' . curl_error($ch));
+        }
+
+        // Close connection
+        curl_close($ch);
+
+        return json_decode($result);
     }
     public function CartPage(){
 

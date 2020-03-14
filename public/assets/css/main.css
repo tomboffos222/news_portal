@@ -135,10 +135,17 @@ a.link-active,
 	border-bottom: 1px solid;
 	min-height: 38px;
 	line-height: 38px;
-	overflow: hidden;
+    overflow: hidden;
 }
 .top_bar .social {
 	text-align: right;
+}
+.social ul{
+    margin-bottom: 0px;
+}
+.social{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }
 .top_bar .social li {
 	display: inline-block;

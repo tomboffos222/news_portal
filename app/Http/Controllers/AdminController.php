@@ -83,7 +83,7 @@ class AdminController extends Controller
             'price'=> 'required',
             'category'=>'required',
 
-            'description'=>'required|max:255',
+            'description'=>'required',
             'stock'=>'required',
 
         ];
@@ -94,7 +94,7 @@ class AdminController extends Controller
             "category.required" => "Выберите категорию",
 
             "description.required" => "Введите описание",
-            "description.max" => "Максимальное число символов в описании 255",
+
             "stock.required" => "Пометьте как товар в наличии",
         ];
         $validator = $this->validator($request->all(),$rules, $messages);
@@ -431,7 +431,7 @@ class AdminController extends Controller
         $data['categories'] = Categories::get();
 
 
-        $data['products'] = Product::where('status','1')->paginate(10);
+        $data['products'] = Product::where('status','1')->orderBy('id','desc')->paginate(10);
         return view('admin.product',$data);
     }
     public function RejectUser($id){
@@ -448,7 +448,7 @@ class AdminController extends Controller
         ];
         $messages = [
             "zhsn.required" => "Введите ИИН",
-            "zhsn.max"=>"Введите не больше 14 цивр"
+            "zhsn.max"=>"Введите не больше 14 цифр"
         ];
         $validator = $this->validator($request->all(), $rules, $messages);
 

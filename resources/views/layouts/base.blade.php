@@ -53,15 +53,24 @@
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif:300,400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/Response.css')}}">
     <!--Poprup-->
     <link href="{{asset('assets/css/popup.css')}}" rel="stylesheet">
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.bpopup.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('admin-vendor/css/Response.css')}}">
     <script>
         $( document ).ready(function() {
             $('#popup_this').bPopup();
         });
     </script>
+    <style>
+        @media (max-width: 786px){
+            .header .logo {
+                float: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
 <style>
@@ -107,7 +116,7 @@
 <div id="wrapper">
     <div id="sidebar-wrapper">
         <div class="sidebar-inner">
-            <div class="off-canvas-close"><span>CLOSE</span></div>
+            <div class="off-canvas-close"><span>Закрыть</span></div>
             <div class="sidebar-widget">
                 <div class="widget-title-cover">
                     <h4 class="widget-title"><span>Популярные статьи</span></h4>
@@ -202,7 +211,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12 col-md-12 header">
-                            <h1 class="logo"><a href="{{route('Home')}}">THE KHAN TIME</a></h1>
+                            <h1 class="logo"><a href="{{route('Home')}}">THE KHAN TIME</a></h1> <br>
                             <p class="tagline">ГАЗЕТА / ЖУРНАЛ / ИЗДАТЕЛЬ</p>
                         </div>
                     </div>
@@ -314,7 +323,7 @@
                             </div>
                         </div>
 
-                        <div class="col-8 col-md-12 coppyright"> <p>© Copyright 2020, Все права защищены. Сайт создан компанией <a href="https://nextin.me" title="AliTheme">Next in</a></p> </div>
+                        <div class="col-12 col-md-12 coppyright"> <p>© Copyright 2020, Все права защищены. Сайт создан компанией <a href="https://nextin.me" title="AliTheme">Next in</a></p> </div>
                         <div class="col-lg-12 col-md-12 coppyright">По поводу сотрудничество звонить по номеру <a
                                 href="tel:+77082222225">87082222225</a></div>
                     </div>

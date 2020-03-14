@@ -57,11 +57,19 @@
     <link href="{{asset('assets/css/popup.css')}}" rel="stylesheet">
     <script src="{{asset('assets/js/jquery.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.bpopup.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('admin-vendor/css/Response.css')}}">
     <script>
         $( document ).ready(function() {
             $('#popup_this').bPopup();
         });
     </script>
+    <style>
+        @media (max-width: 786px){
+            .header .logo {
+                float: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
 <style>
